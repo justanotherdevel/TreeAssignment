@@ -22,7 +22,7 @@ bool Trees::operator== (Trees check) const{
 
 //Allows allocation without passing any argument
 Trees::Trees(){
-
+	lChild = rChild = 0;
 }
 
 //Creates a copy constructor
@@ -33,4 +33,7 @@ Trees::Trees (const Trees &cpy){
 //Creates a constructor that assigns the passed val to the the value parameter of the object
 Trees::Trees (int val){
 	value = val;
+}
+bool Trees::operator> (Trees check) const{
+	return (this->value > check.value);
 }

@@ -12,6 +12,7 @@ struct Trees{
 	bool operator== (Trees) const;
 	friend ostream& operator<< (ostream&, Trees&);
 	friend istream& operator>> (istream&, Trees&);
+	bool operator> (Trees) const;
 	Trees ();
 	Trees (const Trees&);
 	Trees (int);
