@@ -4,11 +4,13 @@
 
 using namespace std;
 
-extern Node root;
-extern bool insert (Node, Node);
-extern Node del (Node, Node);
-extern bool traverse (Node);
+//Function defined in a different file
+extern Node insert (Node, int);
+extern Node del (Node, int);
+extern void traverse (Node);
 extern Node min (Node);
+extern bool search (Node, int);
+extern Node max (Node);
 
 //Little function to beautify menu
 ostream& pos (ostream &position){
@@ -24,59 +26,56 @@ void menu (){
 	cout << pos << "2. Delete";
 	cout << pos << "3. Display";
 	cout << pos << "4. Display Minimum";
-	cout << pos << "5. Exit";
+	cout << pos << "5. Search";
+	cout << pos << "6. Exit";
 	cout << pos;
 }
 
-//Acts on the user's choice
-void act (int choice){
-	Node temp = new node;	//Take input for various action
-	temp->lChild = temp->rChild = 0;
-	bool check = false;				//Holds if the function returned successfully
-	switch (choice){
-		case 1:
-			cout << "Enter data to be inserted: ";
-			cin >> *temp;
-			check = insert (temp, root);
-			if (!check)
-				cout << "Some error occured.";
-			break;
-		case 2:
-			cout << "Enter data to be deleted: ";
-			cin >> *temp;
-			root = del (temp, root);
-			break;
-		case 3:
-			check = traverse (root);
-			if (!check)
-				cout << "Tree empty.";
-			break;
-		case 4:
-			cout << "\nMin is: ";
-			temp = min (root);
-			if (temp)
-				cout << *temp;
-			else
-				cout << "Tree empty";
-			break;
-		case 5:
-			exit (0);
-		default:
-			cout << "Wrong choice.";
-	}
-}
-
 int main (){
+	Node root = 0, temp;
+	int data;			//Takes data to be operated upon
 	while (1){
 		menu ();
 		int choice;
 		cin >> choice;
-		act (choice);
-		cout << endl;
-		cout << "Press any key to continue";
-		cin.clear ();
-		cin.ignore (1000, '\n');
-		getchar ();
+		system ("clear");
+		switch (choice){
+			case 1:
+				cout << "Enter data to be inserted: ";
+				cin >> data;
+				root = insert(root, data);
+				break;
+			case 2:
+				cout << "Enter data to be deleted: ";
+				cin >> data;
+				root = del (root, data);
+				break;
+			case 3:
+				traverse (root);
+				break;
+			case 4:
+				temp = min (root);
+				if (temp)
+					cout << "Minimum is: " << temp->value;
+				else
+					cout << "Tree is empty.";
+				break;
+			case 5:
+				cout << "Enter data to be searched: ";
+				cin >> data;
+				if (search (root, data))
+					cout << "\nData present";
+				else
+					cout << "\nData not present";
+				break;
+			case 6:
+				exit(0);
+			default:
+				cout << "Wrong choice";
+		}
+		cout << "\nPress return key to continue...";
+		cin.clear();
+		cin.ignore(1000,'\n');
+		getchar();
 	}
-	return 0;
 }
